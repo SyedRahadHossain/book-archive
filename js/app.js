@@ -1,87 +1,57 @@
 const searchResult = document.getElementById('search-result');
+const errorDiv = document.getElementById("error");
 
 
 const numberFound = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
-
     const url = `https://openlibrary.org/search.json?q=${searchText}`;
     fetch(url)
         .then(res => res.json())
         .then(data => showNumberFound(data.numFound));
 }
 
-
-// numberFound();
-
 const showNumberFound = data => {
-    // for (const object in data) {
-    //     console.log(data);
-    // }
-    // console.log(data)
     const numberOfBooks = document.getElementById("numberOf-books");
     numberOfBooks.innerText = `Number of books found ${data}`;
-
 }
 
 const searchBooks = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
-    const errorDiv = document.getElementById("error");
+    // const errorDiv = document.getElementById("error");
 
     const search = searchField.value;
     // handling empty search field
     if (search === "") {
         errorDiv.innerText = "Search field cannot be empty.";
         searchResult.textContent = '';
-
         return;
     }
+    // clearing error text
     else {
         errorDiv.innerText = "";
     }
-
     // clearing search field
     searchField.value = '';
 
     const url = `https://openlibrary.org/search.json?q=${searchText}`;
     fetch(url)
         .then(res => res.json())
-        // .then(data => displaySearchResult(data))
         .then(data => displaySearchResult(data.docs));
 }
 
-// searchBooks();
-
-
-
-
 const displaySearchResult = books => {
     // const searchResult = document.getElementById('search-result');
+
+    //clearing search result
     searchResult.textContent = '';
 
-    // error handling
-    // for (const numberFound in books) {
-    //     console.log(numberFound);
-    // }
-
-    // if (data.numFound === 0) {
-    //     errorDiv.innerText = "NO Result Found";
-    // } else {
-    //     errorDiv.innerText = "";
-    // }
-
-
-
+    if (books.length == 0) {
+        errorDiv.innerText = "No book found, please search a valid book name.";
+    }
 
     books.forEach(book => {
-        // console.log(book);
-
-        // if (Object.keys(books).length === 0 ) {
-        //     errorDiv.innerText = "NO Result Found";;
-        // }
-
-
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
@@ -98,15 +68,4 @@ const displaySearchResult = books => {
         `;
         searchResult.appendChild(div);
     })
-
-
-    /*     for(const book in books){
-            console.log(book);
-        } */
-
-
-
-    /*   for(let i = 0; i<10; i++){
-          console.log(books.docs[i].author_name[0]);
-      } */
 }

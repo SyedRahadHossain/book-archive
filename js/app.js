@@ -21,6 +21,9 @@ const searchBooks = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     const errorDiv = document.getElementById("error");
+
+   
+
     const search = searchField.value;
     // handling empty search field
     if (search === "") {
@@ -32,6 +35,8 @@ const searchBooks = () => {
     else {
         errorDiv.innerText = "";
     }
+     // display spinner
+    //  toggleSpinner('block');
     // clearing search field
     searchField.value = '';
     const url = `https://openlibrary.org/search.json?q=${searchText}`;
@@ -65,5 +70,12 @@ const displaySearchResult = books => {
         </div>
         `;
         searchResult.appendChild(div);
-    })
+    });
+    // display spinner
+    // toggleSpinner('block');
+
 }
+
+// const toggleSpinner = displayStyle => {
+//     document.getElementById('spinner').style.display = displayStyle;
+// }
